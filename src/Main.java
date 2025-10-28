@@ -1,39 +1,53 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
+void main(){
+    //create an object using @Builder of lombok
+    Product product=Product.builder()
+            .label("product car")
+            .price(33890)
+            .id(5)
+            .manufacturingDate(LocalDate.of(2024,11,14))
+            .build();
+    product.showProduct();
+
+    IO.println(product);
+    IO.println(product.toString());
 
 
-    //Create a product then get its information from the keyboard
-   Product p1=new Product();
-    Scanner sc=new Scanner(System.in);
-    IO.print("id ? = ");
-    //long id= sc.nextLong();
-    //p1.setId(id);
-    //or
-    p1.setId(sc.nextLong());
-    IO.println("price ? = ");
-    double price=sc.nextDouble();
-    IO.println("name ? = ");
-    String name=sc.nextLine();
-    name=sc.nextLine();
-    p1.setLabel(name);
 
-    IO.println("date of manufacturing ? = ");
-    String date1=sc.next();
-    DateTimeFormatter formatter=DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    LocalDate manufacturingDate = LocalDate.parse(date1,formatter);
-    p1.setManufacturingDate(manufacturingDate);
-
-    //show product information on the screen
-    IO.println("The product 1 information :");
-    IO.println("id = "+p1.getId()+", label = "+p1.getLabel()+", price = "+p1.getPrice()+"manuf. date = "+ p1.getManufacturingDate());
-
-    //create another product with these information:
-    //id=5, label = "PC ASUS", price=3500, manufacturing date = 12/11/2025
-    Product p2=new Product(5L,"PC ASUS", 3500,LocalDate.of(2025,11,12));
-    //show product information on the screen
-    IO.println(p2);
-    IO.println(p2.toString());
+    //create 2 products
+    //id=5, label ="gaming PC" price = 2750, manufacturing Date : 2025-05-11
+    //id=11, label ="Macbook" price = 6500, manufacturing Date : 2025-08-03
+    //1st method : using setters to initialize the fields
 
 
+
+    Product p1=new Product();
+    IO.println("product 1 :"+p1);
+    p1.id(5); p1.label("gaming PC"); p1.price(2750);
+    p1.manufacturingDate(LocalDate.of(2025,8,3));
+
+    //2nd method : using a parameterized constructor to initialize fields
+    Product p2=new Product(11,"product Macbook",-6500,LocalDate.of(2025,5,11));
+    IO.println("product 1 :"+p2);
+
+    //print products information using getters
+    IO.println("Product 1 :");
+    IO.println("id = "+p1.id()+", label = "+p1.label()+", price = "+p1.price());
+
+    IO.println("Product 2 :");
+    IO.println("id = "+p2.id()+", label = "+p2.label()+", price = "+p2.price());
+
+
+    //create 2 other products
+    Product p3=new Product();
+    //get the information of each product from the keyboard
+    IO.println("Enter the information of the first product :");
+    p3.getProduct();
+    Product p4=new Product();
+    IO.println("Enter the information of the second product :");
+    p4.getProduct();
+    //print information
+    IO.println("product 3 :");
+    p3.showProduct();
+    IO.println("product 4 :");
+    p4.showProduct();
 }
