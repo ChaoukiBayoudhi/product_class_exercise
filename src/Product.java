@@ -4,6 +4,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import java.util.Scanner;
 
 @Builder
@@ -14,13 +15,26 @@ import java.util.Scanner;
 //@RequiredArgsConstructor //generates a constructor with only fields with @NonNull annotation (required)
 @FieldDefaults(level=AccessLevel.PRIVATE)//all fields are private without need to write the private accessor explicitly
 @Accessors(chain=true, fluent = true)//fluent option to call getters and setters without starting with get or set respectively
+//@ToString //returns a String with the values of all fields
+//@ToString(exclude="photo") //returns a String with the values of all fields except the photo's path
+//@ToString(exclude={"photo","id"}) //returns a String with the values of all fields except the photo's path and the id
+@ToString(of={"label", "price"})
+//@EqualsAndHashCode //compares 2 products based on all fields
+//1er case of use
+//@EqualsAndHashCode(onlyExplicitlyIncluded = true) // only the fields annotated with @EqualsAndHashCode.Include are used to compare products (label and price)
+//or using the property "of"
+//@EqualsAndHashCode(of={"price", "label"})
+@EqualsAndHashCode(exclude = {"id", "photo"}) //compares products using all fields except id and photo
 public class Product {
     //Attributes
     @NonNull //the id is required
             int id;
     @NonNull
+    //@EqualsAndHashCode.Include
+    //used only with @EqualsAndHashCode(onlyExplicitlyIncluded = true)
     String label;
     @NonNull
+    //@EqualsAndHashCode.Include
     double price;
     @NonNull
     LocalDate manufacturingDate;
@@ -37,16 +51,6 @@ public class Product {
         else
             IO.println("Verify the price value");
         this.manufacturingDate=mdate;
-    }
-
-    //print product information on the screen
-    public void showProduct()
-    {
-        IO.println("id = "+id);
-        IO.println("label = "+label);
-        IO.println("price = "+price);
-        //or
-        //IO.println("id = "+id+", label = "+label+ ",price = "+price);
     }
 
     //get product information from the keyboard
@@ -66,9 +70,15 @@ public class Product {
         DateTimeFormatter formatter =DateTimeFormatter.ofPattern("yyyy-MM-dd");
         manufacturingDate=LocalDate.parse(date,formatter);
     }
-    public boolean compareProduct(Product p){
-        //compare 2 products (courant object(this) and the product p (the parameter)
-        return true;
-    }
 
+//    @Override
+//    public boolean equals(Object o) {
+//        if (!(o instanceof Product product)) return false;
+//        return Double.compare(price, product.price) == 0 && Objects.equals(label, product.label) && Objects.equals(manufacturingDate, product.manufacturingDate);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(label, price, manufacturingDate);
+//    }
 }

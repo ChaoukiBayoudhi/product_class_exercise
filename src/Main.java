@@ -1,4 +1,4 @@
-void main(){
+void main(String[] args){
     //create an object using @Builder of lombok
     Product product=Product.builder()
             .label("product car")
@@ -6,10 +6,16 @@ void main(){
             .id(5)
             .manufacturingDate(LocalDate.of(2024,11,14))
             .build();
-    product.showProduct();
-
     IO.println(product);
-    IO.println(product.toString());
+    //example of use of the property chain of the annotation @Accessors
+    Product product1 = new Product()
+            .id(22)
+            .price(5790)
+            .label("product BYD hybrid car")
+            .manufacturingDate(LocalDate.of(2025,5,13));
+    IO.println(product1);
+
+    IO.println(product); // call to the toString()
 
 
 
@@ -47,7 +53,9 @@ void main(){
     p4.getProduct();
     //print information
     IO.println("product 3 :");
-    p3.showProduct();
-    IO.println("product 4 :");
-    p4.showProduct();
+    IO.println(p3);
+    IO.println("product 4 :\n" + p4);
+
+    //compare the products 3 and 4 using equals
+    IO.println("The 2  products are equivalents ? = "+p3.equals(p4));
 }
